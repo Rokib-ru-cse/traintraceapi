@@ -13,7 +13,7 @@ namespace traintraceapi.Model
         public string? TrainName { get; set; }
         [MaxLength(10)]
         public string? TrainNo { get; set; }
-        public Country Country { get; set; }
+        public Country? Country { get; set; }
         [Required]
         public int CountryId { get; set; }
         [Required]

@@ -1,5 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
+<ItemGroup>
+    <ProjectReference Include="..\traintraceapi.Model\traintraceapi.Model.csproj" />
+    <ProjectReference Include="..\traintraceapi.DAL\traintraceapi.DAL.csproj" />
+  
+  </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

@@ -1,6 +1,7 @@
-﻿using traintraceapi.Utils;
-using traintraceapi.DAL.DbSeed.CountrySeed;
+﻿using traintraceapi.DAL.DbSeed.CountrySeed;
 using traintraceapi.DAL.DbSeed.TrainSeed;
+using traintraceapi.BLL.Interface;
+using traintraceapi.BLL.Service;
 
 namespace traintraceapi.Utils
 {
@@ -15,6 +16,9 @@ namespace traintraceapi.Utils
             builder.Services.AddScoped<Seed>();
             builder.Services.AddScoped<CountryDbInitializer>();
             builder.Services.AddScoped<TrainDbInitializer>();
+            builder.Services.AddScoped<ICountryBLRepository,CountryBLService>();
+            builder.Services.AddScoped<ITrainBLRepository,TrainBLService>();
+            builder.Services.AddScoped<ILocationBLRepository,LocationBLService>();
 
         }
     }

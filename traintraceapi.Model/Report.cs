@@ -9,7 +9,7 @@ namespace traintraceapi.Model
     public class Report
     {
         public int Id { get; set; }
-        public Train Train { get; set; }
+        public Train? Train { get; set; }
         [Required]
         public int TrainId { get; set; }
         [Required]

@@ -9,9 +9,12 @@ namespace traintraceapi.Model
     public class Location
     {
         public int Id { get; set; }
-        public Train Train { get; set; }
+        public Train? Train { get; set; }
         [Required]
         public int TrainId { get; set; }
+        public Country? Country { get; set; }
+        [Required]
+        public int CountryId { get; set; }
         [Required]
         public float Latitude { get; set; }
         [Required]
