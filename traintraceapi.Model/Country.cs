@@ -8,12 +8,10 @@ namespace traintraceapi.Model
 {
     public class Country
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         [Required,MaxLength(60)]
         public string Name { get; set; }
-        [Required]
-        public DateTime CreatedAt { get; set; }
-        [Required]
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 }

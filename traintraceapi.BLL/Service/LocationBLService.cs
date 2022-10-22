@@ -18,7 +18,7 @@ namespace traintraceapi.BLL.Service
             this.context = context;
         }
 
-        
+
 
         public async Task<ReturnResultWithCollection<Location>> Locations()
         {
@@ -42,6 +42,21 @@ namespace traintraceapi.BLL.Service
         {
             try
             {
+
+                Location isLocationExist = context.Locations.Where(l => l.TrainId == location.TrainId).FirstOrDefault();
+                if (isLocationExist != null)
+                {
+                    return new ReturnResultWithClass<Location>()
+                    {
+                        Success = false,
+                        Message = "This Train Location Already Exist",
+                        Value = location
+                    };
+                }
+
+                location.CreatedAt = DateTime.Now;
+                location.UpdatedAt = DateTime.Now;
+                location.MacAddress = "48:e2:44:5d:b7:d3";
                 context.Locations.Add(location);
                 context.SaveChanges();
                 return new ReturnResultWithClass<Location>()
@@ -61,18 +76,39 @@ namespace traintraceapi.BLL.Service
         {
             try
             {
-                context.Locations.Update(location);
-                context.SaveChanges();
-                return new ReturnResultWithClass<Location>()
+                Location isLocationExist = context.Locations.Where(l => l.Id == location.Id).FirstOrDefault();
+                if (isLocationExist == null)
                 {
-                    Success = true,
-                    Message = "Location update successfully",
-                    Value = location
-                };
+                    return new ReturnResultWithClass<Location>()
+                    {
+                        Success = false,
+                        Message = "Train Location Not Found",
+                        Value = location
+                    };
+                }
+                else
+                {
+                    isLocationExist.Id = location.Id;
+                    isLocationExist.TrainId = location.TrainId;
+                    isLocationExist.CountryId = location.CountryId;
+                    isLocationExist.Latitude = location.Latitude;
+                    isLocationExist.Longitude = location.Longitude;
+                    isLocationExist.Accuracy = location.Accuracy;
+                    isLocationExist.MacAddress = location.MacAddress;
+                    isLocationExist.CreatedAt = location.CreatedAt;
+                    isLocationExist.UpdatedAt = DateTime.Now;
+                    context.Locations.Update(isLocationExist);
+                    context.SaveChanges();
+                    return new ReturnResultWithClass<Location>()
+                    {
+                        Success = true,
+                        Message = "Location update successfully",
+                        Value = isLocationExist
+                    };
+                }
             }
             catch (System.Exception)
             {
-
                 throw;
             }
         }
@@ -81,19 +117,31 @@ namespace traintraceapi.BLL.Service
         {
             try
             {
-                Location location =  context.Locations.Where(l=>l.Id==locationId).FirstOrDefault();
-                context.Locations.Remove(location);
-                context.SaveChanges();
-                return new ReturnResultWithClass<Location>()
+                Location location = context.Locations.Where(l => l.Id == locationId).FirstOrDefault();
+                if (location == null)
                 {
-                    Success = true,
-                    Message = "Location deleted successfully",
-                    Value = location
-                };
+                    return new ReturnResultWithClass<Location>()
+                    {
+                        Success = false,
+                        Message = "Train Location Not Found",
+                        Value = location
+                    };
+                }
+                else
+                {
+
+                    context.Locations.Remove(location);
+                    context.SaveChanges();
+                    return new ReturnResultWithClass<Location>()
+                    {
+                        Success = true,
+                        Message = "Location deleted successfully",
+                        Value = location
+                    };
+                }
             }
             catch (System.Exception)
             {
-
                 throw;
             }
         }
@@ -102,12 +150,26 @@ namespace traintraceapi.BLL.Service
         {
             try
             {
-                return new ReturnResultWithClass<Location>()
+                Location location = context.Locations.Where(l => l.Id == locationId).FirstOrDefault();
+                if (location == null)
                 {
-                    Success = true,
-                    Message = "Location found successfully",
-                    Value = context.Locations.Where(l=>l.Id==locationId).FirstOrDefault()
-                };
+                    return new ReturnResultWithClass<Location>()
+                    {
+                        Success = false,
+                        Message = "Train Location Not Found",
+                        Value = location
+                    };
+                }
+                else
+                {
+
+                    return new ReturnResultWithClass<Location>()
+                    {
+                        Success = true,
+                        Message = "Location found successfully",
+                        Value = location
+                    };
+                }
             }
             catch (System.Exception)
             {
@@ -118,12 +180,25 @@ namespace traintraceapi.BLL.Service
 
         public async Task<ReturnResultWithClass<Location>> LocationByTrainId(int trainId)
         {
-            return new ReturnResultWithClass<Location>()
+            Location location = context.Locations.Where(l => l.TrainId == trainId).FirstOrDefault();
+            if (location == null)
+            {
+                return new ReturnResultWithClass<Location>()
+                {
+                    Success = false,
+                    Message = "Train Location Not Found",
+                    Value = location
+                };
+            }
+            else
+            {
+                return new ReturnResultWithClass<Location>()
                 {
                     Success = true,
                     Message = "Location found successfully",
-                    Value = context.Locations.Where(l=>l.TrainId==trainId).FirstOrDefault()
+                    Value = location
                 };
+            }
         }
     }
 }

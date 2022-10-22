@@ -57,7 +57,7 @@ namespace traintraceapi.Controllers
                 });
             }
         }
-        [HttpGet("{trainId}")]
+        [HttpGet("trainid/{trainId}")]
         public async Task<IActionResult> LocationByTrainId(int trainId)
         {
             try

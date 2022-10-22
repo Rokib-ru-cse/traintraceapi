@@ -8,7 +8,7 @@ namespace traintraceapi.Model
 {
     public class Location
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public Train? Train { get; set; }
         [Required]
         public int TrainId { get; set; }
@@ -16,16 +16,14 @@ namespace traintraceapi.Model
         [Required]
         public int CountryId { get; set; }
         [Required]
-        public float Latitude { get; set; }
+        public double Latitude { get; set; }
         [Required]
-        public float Longitude { get; set; }
+        public double Longitude { get; set; }
         [Required]
-        public float Accuracy { get; set; }
-        [Required,MaxLength(20)]
-        public string MacAddress { get; set; }
-        [Required]
-        public DateTime CreatedAt { get; set; }
-        [Required]
-        public DateTime UpdatedAt { get; set; }
+        public double Accuracy { get; set; }
+        [MaxLength(20)]
+        public string? MacAddress { get; set; }
+        public DateTime? CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
     }
 }
